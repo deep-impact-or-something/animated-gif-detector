@@ -1,6 +1,6 @@
 animated-gif-detector
 ---
-Detect animated GIFs from Node.js buffers.
+Detect animated GIFs from JavaScript buffers.
 
 ## Installation
 
