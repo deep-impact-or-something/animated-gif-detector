@@ -79,7 +79,7 @@ test('Sunflower_as_gif_websafe.gif', function(t) {
 test('sync => true', function(t) {
   var filePath = path.join(process.cwd(), 'test', 'files', 'example.gif');
   var buffer = fs.readFileSync(filePath);
-  t.notOk(new A().sync(buffer), 'is animated');
+  t.ok(new A().sync(buffer), 'is animated');
   t.end();
 });
 
