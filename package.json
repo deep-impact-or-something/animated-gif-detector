@@ -1,7 +1,7 @@
 {
   "name": "animated-gif-detector",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "animated-gif-detector --- Detect animated GIFs from JavaScript buffers.",
   "main": "index.js",
   "directories": {
     "test": "test"
@@ -13,5 +13,21 @@
   "license": "ISC",
   "devDependencies": {
     "tap": "^0.4.11"
-  }
+  },
+  "dependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mailcharts/animated-gif-detector.git"
+  },
+  "keywords": [
+    "email",
+    "marketing",
+    "mailcharts",
+    "animated",
+    "gif"
+  ],
+  "bugs": {
+    "url": "https://github.com/mailcharts/animated-gif-detector/issues"
+  },
+  "homepage": "https://github.com/mailcharts/animated-gif-detector"
 }
