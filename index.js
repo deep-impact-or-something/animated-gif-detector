@@ -6,7 +6,8 @@ util.inherits(AnimatedGifDetector, Writable);
 function AnimatedGifDetector(buffer, options) {
   Writable.call(this, options);
   this.buffer = buffer || new Buffer(0);
-  this.pointer = 0; //
+  this.pointer = 0;
+  this.isGIF = false;
 }
 
 var isAnimated = function(buffer, pointer) {
@@ -26,6 +27,13 @@ AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
   this.buffer = Buffer.concat([this.buffer, chunk])
     , result = isAnimated(this.buffer, this.pointer)
   ;
+
+  if (this.buffer.length > 4)
+    this.isGIF = this.buffer.slice(0, 3).toString() === 'GIF';
+
+  if (this.isGIF === false)
+    return next();
+
   if (result.animated)
     this.emit('animated');
   this.pointer = result.pointer;
@@ -34,6 +42,8 @@ AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
 
 AnimatedGifDetector.prototype.sync = function(buffer) {
   buffer = Buffer.isBuffer(buffer) ? buffer : new Buffer(buffer);
+  if (buffer.slice(0, 3).toString() !== 'GIF')
+    return false;
   return isAnimated(buffer).animated;
 };
 

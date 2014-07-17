@@ -90,11 +90,25 @@ test('sync => false', function(t) {
   t.end();
 });
 
-test('sync => false (non-GIF)', function(t) {
-  var filePath = path.join(process.cwd(), 'test', 'files', '240px-Felis_silvestris_silvestris_small_gradual_decrease_of_quality.png');
+test('sync => false (non-GIF: PNG)', function(t) {
+  var filePath = path.join(process.cwd(), 'test', 'files', 'Physical-Representations-of-Data.png');
   var buffer = fs.readFileSync(filePath);
   t.notOk(new A().sync(buffer), 'is NOT animated');
   t.end();
+});
+
+test('streaming => false (non-GIF: PNG)', function(t) {
+  var filePath = path.join(process.cwd(), 'test', 'files', 'Physical-Representations-of-Data.png')
+    , animated = false
+  ;
+  fs.createReadStream(filePath)
+    .pipe(new A)
+    .once('animated', function() { animated = true; })
+    .on('finish', function() {
+      t.notOk(animated, 'is animated');
+      t.end();
+    })
+  ;
 });
 
 test('sync => false (non-image)', function(t) {
