@@ -54,3 +54,13 @@ var fs = require('fs')
 
 new Animated().sync(fs.readFileSync('file.gif')) // => true!
 ```
+
+## Browserify
+
+This should work as a client-side package if [Browersified](http://browserify.org/).
+
+## Tests
+
+`npm test` runs the tests.
+
+Please contribute weird animated GIFs to the repository to add to the test cases.
