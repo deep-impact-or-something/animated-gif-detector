@@ -1,7 +1,7 @@
 {
   "name": "animated-gif-detector",
   "version": "0.1.0",
-  "description": "animated-gif-detector --- Detect animated GIFs from JavaScript buffers.",
+  "description": "Detect animated GIFs from JavaScript buffers.",
   "main": "index.js",
   "directories": {
     "test": "test"
