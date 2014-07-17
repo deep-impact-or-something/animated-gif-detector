@@ -1,0 +1,17 @@
+{
+  "name": "animated-gif-detector",
+  "version": "0.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "NODE_ENV=test node test/index.test.js"
+  },
+  "author": "Tom Buchok <tom@buchok.com> (http://buchok.com/)",
+  "license": "ISC",
+  "devDependencies": {
+    "tap": "^0.4.11"
+  }
+}
