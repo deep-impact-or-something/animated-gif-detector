@@ -18,10 +18,10 @@ This module is intended to be used as a Writable stream:
 
 ```js
 var fs = require('fs')
-  , Animated = require('animated-gif-detector')
+  , animated = require('animated-gif-detector')
 ;
 fs.createReadStream('file.gif')
-  .pipe(new Animated)
+  .pipe(animated())
   .on('animated', function() {
     console.log('detected animation!');
   }); 
@@ -32,10 +32,10 @@ Particularly, you may want to determine animate *as early as possible* in a give
 
 ```js
 var http = require('http')
-  , Animated = require('animated-gif-detector')
+  , animated = require('animated-gif-detector')
 ;
 var req = http.get('http://domain.com/file.gif')
-  .pipe(new Animated)
+  .pipe(animated())
   .once('animated', function() {
     req.abort();
     // do something else!
@@ -49,10 +49,10 @@ If an img is loaded as a buffer directly, a sync function is also available:
 
 ```js
 var fs = require('fs')
-  , Animated = require('animated-gif-detector')
+  , animated = require('animated-gif-detector')
 ;
 
-new Animated().sync(fs.readFileSync('file.gif')) // => true!
+animated(fs.readFileSync('file.gif')) // => true!
 ```
 
 ## Browserify

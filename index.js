@@ -5,7 +5,7 @@ var Writable = require('stream').Writable
 util.inherits(AnimatedGifDetector, Writable);
 function AnimatedGifDetector(buffer, options) {
   Writable.call(this, options);
-  this.buffer = buffer || new Buffer(0);
+  this.buffer = new Buffer(0);
   this.pointer = 0;
   this.isGIF = false;
 }
@@ -40,11 +40,13 @@ AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
   next();
 };
 
-AnimatedGifDetector.prototype.sync = function(buffer) {
-  buffer = Buffer.isBuffer(buffer) ? buffer : new Buffer(buffer);
-  if (buffer.slice(0, 3).toString() !== 'GIF')
-    return false;
-  return isAnimated(buffer).animated;
-};
-
-module.exports = AnimatedGifDetector;
+module.exports = function(buffer) {
+  if (buffer) {
+    buffer = Buffer.isBuffer(buffer) ? buffer : new Buffer(buffer);
+    if (buffer.slice(0, 3).toString() !== 'GIF')
+      return false;
+    else
+      return isAnimated(buffer).animated;
+  }
+  return new AnimatedGifDetector;
+}
