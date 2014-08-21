@@ -71,7 +71,20 @@ test('Sunflower_as_gif_websafe.gif', function(t) {
     .pipe(animated())
     .once('animated', function() { result = true; })
     .on('finish', function() {
-      t.notOk(result, 'is animated');
+      t.notOk(result, 'is not animated');
+      t.end();
+    });
+});
+
+test('bf34256561471b09a457cd24e35a99ed9948dc05.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'bf34256561471b09a457cd24e35a99ed9948dc05.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.ok(result, 'is animated');
       t.end();
     });
 });
