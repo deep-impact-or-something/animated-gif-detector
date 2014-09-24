@@ -89,6 +89,137 @@ test('postcard.gif', function(t) {
     });
 });
 
+test('1E3A0FFF2F0ED7F3DD8DAE5CC461494E.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', '1E3A0FFF2F0ED7F3DD8DAE5CC461494E.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('09_24_14_Better_Together_GC_Event_FD.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', '09_24_14_Better_Together_GC_Event_FD.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('21.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', '21.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+
+test('calendar_265x230.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'calendar_265x230.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('2026556_rw_nl_160X250.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', '2026556_rw_nl_160X250.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('connections.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'connections.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('block-7.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'block-7.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('PSP14_728-x-90_HOUZZ.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'PSP14_728-x-90_HOUZZ.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('daily-idea-header.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'daily-idea-header.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
+test('b_cc_email14.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'b_cc_email14.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
 test('sync => true', function(t) {
   var filePath = path.join(process.cwd(), 'test', 'files', 'example.gif');
   var buffer = fs.readFileSync(filePath);
