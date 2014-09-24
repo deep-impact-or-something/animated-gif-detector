@@ -1,5 +1,5 @@
 var Writable = require('stream').Writable
-  , util = require('util')
+  , inherits = require('inherits')
   // GIF CONSTANTS. source => http://www.onicos.com/staff/iz/formats/gif.html
   , BLOCK_TERMINATOR = { value: new Buffer('00') }
   , EXTENSION_INTRODUCER = {
@@ -19,7 +19,7 @@ var Writable = require('stream').Writable
     }
 ;
 
-util.inherits(AnimatedGifDetector, Writable);
+inherits(AnimatedGifDetector, Writable);
 function AnimatedGifDetector(buffer, options) {
   Writable.call(this, options);
   this.buffer = new Buffer(0);
