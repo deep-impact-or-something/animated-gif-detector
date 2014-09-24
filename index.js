@@ -1,5 +1,22 @@
 var Writable = require('stream').Writable
   , util = require('util')
+  // GIF CONSTANTS. source => http://www.onicos.com/staff/iz/formats/gif.html
+  , BLOCK_TERMINATOR = { value: new Buffer('00') }
+  , EXTENSION_INTRODUCER = {
+        value: new Buffer('21')
+      , head: 0
+      , tail: 1
+    }
+  , GRAPHIC_CONTROL_LABEL = {
+        value: new Buffer('f9')
+      , head: 1
+      , tail: 2
+    }
+  , DELAY_TIME = {
+        value: 0 // if there's a delay time, it's animated! 0 means false positive.
+      , head: 3
+      , tail: 5
+    }
 ;
 
 util.inherits(AnimatedGifDetector, Writable);
@@ -13,13 +30,15 @@ function AnimatedGifDetector(buffer, options) {
 var isAnimated = function(buffer, pointer) {
   var result = false;
   for (var i = 0; i < buffer.length; i++) {
-    result = pointer == '00' &&
-             buffer.toString('hex', i, i + 1) == '21' &&
-             buffer.toString('hex', i + 1, i + 2) == 'f9';
+    result = pointer == BLOCK_TERMINATOR.value &&
+             buffer.toString('hex', i + EXTENSION_INTRODUCER.head, i + EXTENSION_INTRODUCER.tail) == EXTENSION_INTRODUCER.value &&
+             buffer.toString('hex', i + GRAPHIC_CONTROL_LABEL.head, i + GRAPHIC_CONTROL_LABEL.tail) == GRAPHIC_CONTROL_LABEL.value &&
+             buffer.toString('hex', i + DELAY_TIME.head, i + DELAY_TIME.tail) > DELAY_TIME.value;
     pointer = buffer.toString('hex', i, i + 1);
     if (result)
       break;
   }
+
   return { pointer: pointer, animated: result };
 }
 

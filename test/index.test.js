@@ -76,6 +76,19 @@ test('Sunflower_as_gif_websafe.gif', function(t) {
     });
 });
 
+test('postcard.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'postcard.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
 test('sync => true', function(t) {
   var filePath = path.join(process.cwd(), 'test', 'files', 'example.gif');
   var buffer = fs.readFileSync(filePath);
