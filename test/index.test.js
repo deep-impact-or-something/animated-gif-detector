@@ -220,6 +220,19 @@ test('b_cc_email14.gif', function(t) {
     });
 });
 
+test('generic-header.gif', function(t) {
+  var file = path.join(process.cwd(), 'test', 'files', 'generic-header.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      t.notOk(result, 'is NOT animated');
+      t.end();
+    });
+});
+
 test('sync => true', function(t) {
   var filePath = path.join(process.cwd(), 'test', 'files', 'example.gif');
   var buffer = fs.readFileSync(filePath);

@@ -28,18 +28,22 @@ function AnimatedGifDetector(buffer, options) {
 }
 
 var isAnimated = function(buffer, pointer) {
-  var result = false;
+  var result = false
+    , count = 0
+  ;
   for (var i = 0; i < buffer.length; i++) {
     result = pointer == BLOCK_TERMINATOR.value &&
              buffer.toString('hex', i + EXTENSION_INTRODUCER.head, i + EXTENSION_INTRODUCER.tail) == EXTENSION_INTRODUCER.value &&
              buffer.toString('hex', i + GRAPHIC_CONTROL_LABEL.head, i + GRAPHIC_CONTROL_LABEL.tail) == GRAPHIC_CONTROL_LABEL.value &&
              buffer.toString('hex', i + DELAY_TIME.head, i + DELAY_TIME.tail) > DELAY_TIME.value;
-    pointer = buffer.toString('hex', i, i + 1);
     if (result)
-      break;
-  }
+      count += 1;
 
-  return { pointer: pointer, animated: result };
+    if (count > 1)
+      break;
+    pointer = buffer.toString('hex', i, i + 1);
+  }
+  return { pointer: pointer, animated: count > 1 };
 }
 
 AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
