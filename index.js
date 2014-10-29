@@ -23,16 +23,15 @@ inherits(AnimatedGifDetector, Writable);
 function AnimatedGifDetector(buffer, options) {
   Writable.call(this, options);
   this.buffer = new Buffer(0);
-  this.pointer = 0;
   this.isGIF = false;
 }
 
-var isAnimated = function(buffer, pointer) {
+AnimatedGifDetector.prototype.isAnimated = function(buffer) {
   var result = false
     , count = 0
   ;
   for (var i = 0; i < buffer.length; i++) {
-    result = pointer == BLOCK_TERMINATOR.value &&
+    result = this.pointer == BLOCK_TERMINATOR.value &&
              buffer.toString('hex', i + EXTENSION_INTRODUCER.head, i + EXTENSION_INTRODUCER.tail) == EXTENSION_INTRODUCER.value &&
              buffer.toString('hex', i + GRAPHIC_CONTROL_LABEL.head, i + GRAPHIC_CONTROL_LABEL.tail) == GRAPHIC_CONTROL_LABEL.value &&
              buffer.toString('hex', i + DELAY_TIME.head, i + DELAY_TIME.tail) > DELAY_TIME.value;
@@ -41,14 +40,14 @@ var isAnimated = function(buffer, pointer) {
 
     if (count > 1)
       break;
-    pointer = buffer.toString('hex', i, i + 1);
+    this.pointer = buffer.toString('hex', i, i + 1);
   }
-  return { pointer: pointer, animated: count > 1 };
+  return count > 1;
 }
 
 AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
   this.buffer = Buffer.concat([this.buffer, chunk])
-    , result = isAnimated(this.buffer, this.pointer)
+    , animated = this.isAnimated(this.buffer)
   ;
 
   if (this.buffer.length > 4)
@@ -57,9 +56,9 @@ AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
   if (this.isGIF === false)
     return next();
 
-  if (result.animated)
+  if (animated)
     this.emit('animated');
-  this.pointer = result.pointer;
+
   next();
 };
 
@@ -69,7 +68,7 @@ module.exports = function(buffer) {
     if (buffer.slice(0, 3).toString() !== 'GIF')
       return false;
     else
-      return isAnimated(buffer).animated;
+      return (new AnimatedGifDetector).isAnimated(buffer);
   }
   return new AnimatedGifDetector;
 }
