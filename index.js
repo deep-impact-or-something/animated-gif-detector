@@ -12,11 +12,6 @@ var Writable = require('stream').Writable
       , head: 1
       , tail: 2
     }
-  , DELAY_TIME = {
-        value: 0 // if there's a delay time, it's animated! 0 means false positive.
-      , head: 3
-      , tail: 5
-    }
 ;
 
 inherits(AnimatedGifDetector, Writable);
@@ -30,11 +25,14 @@ AnimatedGifDetector.prototype.isAnimated = function(buffer) {
   var result = false
     , count = 0
   ;
-  for (var i = 0; i < buffer.length; i++) {
+  var packed = buffer.slice(10, 11)[0];
+  var colorTableSize = 3*2^(packed+1);
+  var leadBytes = 13 + colorTableSize;
+  for (var i = leadBytes + 1; i < buffer.length; i++) {
     result = this.pointer == BLOCK_TERMINATOR.value &&
              buffer.toString('hex', i + EXTENSION_INTRODUCER.head, i + EXTENSION_INTRODUCER.tail) == EXTENSION_INTRODUCER.value &&
-             buffer.toString('hex', i + GRAPHIC_CONTROL_LABEL.head, i + GRAPHIC_CONTROL_LABEL.tail) == GRAPHIC_CONTROL_LABEL.value &&
-             buffer.toString('hex', i + DELAY_TIME.head, i + DELAY_TIME.tail) > DELAY_TIME.value;
+             buffer.toString('hex', i + GRAPHIC_CONTROL_LABEL.head, i + GRAPHIC_CONTROL_LABEL.tail) == GRAPHIC_CONTROL_LABEL.value;
+
     if (result)
       count += 1;
 
