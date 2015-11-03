@@ -1,6 +1,6 @@
 var Writable = require('stream').Writable
   , inherits = require('inherits')
-  // GIF CONSTANTS. source => http://www.onicos.com/staff/iz/formats/gif.html
+  // GIF CONSTANTS: http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
   , BLOCK_TERMINATOR = { value: new Buffer('00') }
   , EXTENSION_INTRODUCER = {
         value: new Buffer('21')
