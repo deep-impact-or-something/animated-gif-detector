@@ -233,6 +233,13 @@ test('generic-header.gif', function(t) {
     });
 });
 
+test('colbert', function(t) {
+  var filePath = path.join(process.cwd(), 'test', 'files', 'colbert.gif');
+  var buffer = fs.readFileSync(filePath);
+  t.ok(animated(buffer), 'is animated');
+  t.end();
+});
+
 test('sync => true', function(t) {
   var filePath = path.join(process.cwd(), 'test', 'files', 'example.gif');
   var buffer = fs.readFileSync(filePath);
