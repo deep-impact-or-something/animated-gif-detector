@@ -64,3 +64,9 @@ This should work as a client-side package if [Browersified](http://browserify.or
 `npm test` runs the tests.
 
 Please contribute weird animated GIFs to the repository to add to the test cases.
+
+## Contributors
+
+Thanks to hard work from the following contributors:
+
+Bradley Spaulding - [GitHub/bspaulding](https://github.com/bspaulding)
