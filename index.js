@@ -1,5 +1,6 @@
 var Writable = require('stream').Writable
   , inherits = require('inherits')
+  , types = require('typechecker')
   // GIF CONSTANTS: http://www.matthewflickinger.com/lab/whatsinagif/bits_and_bytes.asp
   , BLOCK_TERMINATOR = { value: new Buffer('00') }
   , EXTENSION_INTRODUCER = {
@@ -59,6 +60,12 @@ AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
 
 module.exports = function(buffer) {
   if (buffer) {
+    var valid = types.isString(buffer)
+      || types.isNumber(buffer)
+      || Buffer.isBuffer(buffer)
+    ;
+    if (!valid)
+      return false;
     buffer = Buffer.isBuffer(buffer) ? buffer : new Buffer(buffer);
     if (buffer.slice(0, 3).toString() !== 'GIF')
       return false;

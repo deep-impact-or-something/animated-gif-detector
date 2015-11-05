@@ -15,7 +15,8 @@
     "tap": "^0.4.11"
   },
   "dependencies": {
-    "inherits": "^2.0.1"
+    "inherits": "^2.0.1",
+    "typechecker": "^4.0.0"
   },
   "repository": {
     "type": "git",
