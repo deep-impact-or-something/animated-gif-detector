@@ -19,7 +19,6 @@ inherits(AnimatedGifDetector, Writable);
 function AnimatedGifDetector(buffer, options) {
   Writable.call(this, options);
   this.buffer = new Buffer(0);
-  this.isGIF = false;
 }
 
 AnimatedGifDetector.prototype.isAnimated = function(buffer) {
@@ -46,17 +45,17 @@ AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
     , animated = this.isAnimated(this.buffer)
   ;
 
-  if (this.buffer.length > 4)
+  if (this.buffer.length > 4 && this.isGIF == undefined)
     this.isGIF = this.buffer.slice(0, 3).toString() === 'GIF';
 
   // If it's the first chunk of stream we analyze and is not GIF, stop
-  if (this.isGIF === false) {
-    this.emit('finish');
-    return;
-  }
+  if (this.isGIF === false)
+    return this.emit('finish');
 
-  if (animated)
+  if (animated) {
     this.emit('animated');
+    return this.emit('finish');
+  }
 
   next();
 };
