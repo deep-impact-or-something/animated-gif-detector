@@ -20,6 +20,7 @@ function AnimatedGifDetector(buffer, options) {
   Writable.call(this, options);
   this.buffer = new Buffer(0);
   this.isGIF = false;
+  this.chunks = 0;
 }
 
 AnimatedGifDetector.prototype.isAnimated = function(buffer) {
@@ -48,6 +49,13 @@ AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
 
   if (this.buffer.length > 4)
     this.isGIF = this.buffer.slice(0, 3).toString() === 'GIF';
+
+  // If it's the first chunk of stream we analyze and is not GIF, stop
+  if ((this.isGIF === false) && (this.chunks == 0)) {
+    this.emit('finish');
+    return;
+  }
+  this.chunks += 1;
 
   if (this.isGIF === false)
     return next();
