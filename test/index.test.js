@@ -1,5 +1,6 @@
 var path = require('path')
   , fs = require('fs')
+  , stream = require('stream')
   , test = require('tap').test
   , animated = require(path.join(process.cwd(), 'index'))
 ;
@@ -270,6 +271,24 @@ test('streaming => false (non-GIF: PNG)', function(t) {
     .once('animated', function() { result = true; })
     .on('finish', function() {
       t.notOk(result, 'is animated');
+      t.end();
+    })
+  ;
+});
+
+test('streaming => infinite buffer', function(t) {
+  var readable = new stream.Readable;
+  var timeout = setTimeout(function() {
+    throw new Error('it did not exit the infinite buffer');
+  }, 200);
+  readable._read = function() {
+    this.push(new Buffer('infinite')); // this readable never ends
+  };
+  readable
+    .pipe(animated())
+    .on('finish', function() {
+      clearTimeout(timeout);
+      t.ok(true, 'it ended despite infinite buffer');
       t.end();
     })
   ;
