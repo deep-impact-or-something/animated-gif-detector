@@ -70,3 +70,4 @@ Please contribute weird animated GIFs to the repository to add to the test cases
 Thanks to hard work from the following contributors:
 
 Bradley Spaulding - [GitHub/bspaulding](https://github.com/bspaulding)
+Vilson Vieira - [GitHub/automata](https://github.com/automata)
