@@ -41,7 +41,7 @@ AnimatedGifDetector.prototype.isAnimated = function(buffer) {
 
 AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
   this.buffer = Buffer.concat([this.buffer, chunk])
-    , animated = this.isAnimated(this.buffer)
+  var animated = this.isAnimated(this.buffer)
   ;
 
   if (this.buffer.length > 4 && this.isGIF == undefined)
