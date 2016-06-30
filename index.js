@@ -18,11 +18,11 @@ inherits(AnimatedGifDetector, Writable);
 function AnimatedGifDetector(buffer, options) {
   Writable.call(this, options);
   this.buffer = new Buffer(0);
+  this.count = 0;
 }
 
 AnimatedGifDetector.prototype.isAnimated = function(buffer) {
   var result = false
-    , count = 0
   ;
   for (var i = 0; i < buffer.length; i++) {
     result = this.pointer == BLOCK_TERMINATOR.value &&
@@ -30,17 +30,18 @@ AnimatedGifDetector.prototype.isAnimated = function(buffer) {
              buffer.toString('hex', i + GRAPHIC_CONTROL_LABEL.head, i + GRAPHIC_CONTROL_LABEL.tail) == GRAPHIC_CONTROL_LABEL.value;
 
     if (result)
-      count += 1;
+      this.count += 1;
 
-    if (count > 1)
-      break;
+    if (this.count > 1)
+      return true;
     this.pointer = buffer.toString('hex', i, i + 1);
   }
-  return count > 1;
+  return false;
 }
 
 AnimatedGifDetector.prototype._write = function(chunk, enc, next) {
-  this.buffer = Buffer.concat([this.buffer, chunk])
+  // We can discard the last buffer up to last 2 bytes
+  this.buffer = Buffer.concat([this.buffer.slice(-2), chunk]);
   var animated = this.isAnimated(this.buffer)
   ;
 
