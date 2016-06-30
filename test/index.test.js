@@ -305,3 +305,21 @@ test('sync => false (non-buffer)', function(t) {
   t.notOk(animated({foo: 'bar' }), 'is NOT animated');
   t.end();
 });
+
+test('processing => large-size-not-animated.gif', function(t) {
+  var timeout = setTimeout(function() {
+    throw new Error('it is taking more than 10 seconds in processing large-size-not-animated.gif');
+  }, 10000);
+
+  var file = path.join(process.cwd(), 'test', 'files', 'large-size-not-animated.gif')
+    , result = false
+  ;
+  fs.createReadStream(file)
+    .pipe(animated())
+    .once('animated', function() { result = true; })
+    .on('finish', function() {
+      clearTimeout(timeout);
+      t.notOk(result, 'is NOT animated and did not timeout');
+      t.end();
+    });
+});
