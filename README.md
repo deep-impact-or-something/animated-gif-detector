@@ -72,3 +72,4 @@ Thanks to hard work from the following contributors:
 - Bradley Spaulding - [GitHub/bspaulding](https://github.com/bspaulding)
 - Vilson Vieira - [GitHub/automata](https://github.com/automata)
 - Andreas Lind - [GitHub/papandreou](https://github.com/papandreou)
+- Priyank Parashar - [GitHub/paras20xx](https://github.com/paras20xx)
