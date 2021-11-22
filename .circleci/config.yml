@@ -7,6 +7,7 @@ orbs:
   # Orbs reduce the amount of configuration required for common tasks.
   # See the orb documentation here: https://circleci.com/developer/orbs/orb/circleci/node
   node: circleci/node@4.7
+  jest: blimmer/jest@1.0.0
 
 jobs:
   # Below is the definition of your job to build and test your app, you can rename and customize it as you want.
@@ -28,7 +29,7 @@ jobs:
           pkg-manager: npm
       - run:
           name: Run tests
-          command: npm ci; npm test
+          command: jest
 
 workflows:
   # Below is the definition of your workflow.
