@@ -28,7 +28,7 @@ jobs:
           pkg-manager: npm
       - run:
           name: Run tests
-          command: jest
+          command: npm test
 
 workflows:
   # Below is the definition of your workflow.
