@@ -12,15 +12,12 @@
   "author": "Tom Buchok <tom@buchok.com> (http://buchok.com/), Arthur Guo (https://github.com/hypernovatx)",
   "license": "ISC",
   "devDependencies": {
-    "@types/tap": "^15.0.5",
     "jest": "^27.3.1",
     "ts-jest": "^27.0.7",
     "typescript": "^4.5.2"
   },
   "dependencies": {
-    "@types/inherits": "^0.0.30",
-    "@types/jest": "^27.0.3",
-    "inherits": "^2.0.1"
+    "@types/jest": "^27.0.3"
   },
   "repository": {
     "type": "git",
